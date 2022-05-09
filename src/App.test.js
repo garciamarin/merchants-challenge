@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
@@ -67,17 +66,6 @@ it('Output component recibes correct props', () => {
 
 describe('outputHandler function',() => { 
   
-  // it('stores number equivalence with type: "number" note',() => { 
-  // render(<App />);
-
-  // const button = screen.getByText(/translate/i);
-  // const output = screen.getByTestId(/outputElement/i)
-
-  // userEvent.type(input,'glob is I')
-  // userEvent.click(button)
-  // expect(output).toHaveTextContent('number')
-
-// })
 it('stores number equivalence with type: "number" note',() => { 
   
   render(<App />);
@@ -89,7 +77,7 @@ it('stores number equivalence with type: "number" note',() => {
   userEvent.click(button)
 
   expect(screen.getByText(/glob is I/i)).toBeInTheDocument();
-  })
+})
 
 it.skip('stores exchange rate with type: "exchange" note',() => { 
   render(<App />);

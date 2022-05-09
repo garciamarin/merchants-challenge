@@ -2,15 +2,13 @@ import { useRef, useState } from "react";
 import { interpret } from "./interpret";
 import Output from "./Output";
 
-
-
+const GALACTIC_TO_ARABIC_DICTIONARY = {}
 
 function App() {
 
   const inputElement = useRef()
   const [notes, setNotes] = useState('')
-  const [interpretedNotes,setInterpretedNotes] = useState([{note:"",type:""}])
-  const [dictionary, setDictionary] = useState({})
+  const [interpretedNotes,setInterpretedNotes] = useState([{note:"",type:""}])  
 
   const clickHandler = () => { 
     inputElement.current.value = ''
@@ -18,13 +16,15 @@ function App() {
     setInterpretedNotes( interpret(notes) )
     }
 
-  const logDigit = (note) => { 
-    const splitedNote = note.split(' is ')
-    console.log(splitedNote)
+  const logDigit = (note,index) => { 
+    const splitedNote = note.split(' is ') 
+    // const newDictionaryEntry = {[splitedNote[0]] : splitedNote[1]  }
+    // dict = {...dict, ...newDictionaryEntry}
+    GALACTIC_TO_ARABIC_DICTIONARY[splitedNote[0]] = splitedNote[1];
+    return <div key={index}>{splitedNote[0]} is {splitedNote[1]}</div>
    }
 
    const logExchange = (first) => { return <div>hola</div> }
-  
   return (
     <>
       <header>
@@ -45,7 +45,7 @@ function App() {
         <button onClick={clickHandler} disabled={!notes}>translate</button>
         
         {interpretedNotes.map((note, index) => {
-          if(note.type === 'number'){logDigit(note.note)}
+          if(note.type === 'number'){return logDigit(note.note,index)}
           else if(note.type === 'exchange'){<div>exchange</div> }
           else{return  <Output key={index} note = {note.note} type= {note.type}/> }
         }
