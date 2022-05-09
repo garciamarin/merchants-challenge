@@ -10,16 +10,20 @@ function App() {
   const inputElement = useRef()
   const [notes, setNotes] = useState('')
   const [interpretedNotes,setInterpretedNotes] = useState([{note:"",type:""}])
+  const [dictionary, setDictionary] = useState({})
 
   const clickHandler = () => { 
     inputElement.current.value = ''
     setNotes('')
     setInterpretedNotes( interpret(notes) )
     }
-  
-  const outputHandler = { 
-    
-     }
+
+  const logDigit = (note) => { 
+    const splitedNote = note.split(' is ')
+    console.log(splitedNote)
+   }
+
+   const logExchange = (first) => { return <div>hola</div> }
   
   return (
     <>
@@ -40,7 +44,13 @@ function App() {
         
         <button onClick={clickHandler} disabled={!notes}>translate</button>
         
-        {interpretedNotes.map((note, index) => <Output key={index} note = {note.note} type= {note.type}/>)}
+        {interpretedNotes.map((note, index) => {
+          if(note.type === 'number'){logDigit(note.note)}
+          else if(note.type === 'exchange'){<div>exchange</div> }
+          else{return  <Output key={index} note = {note.note} type= {note.type}/> }
+        }
+        )}
+        
       
       </main>
     </>
