@@ -1,14 +1,19 @@
 import { useRef, useState } from "react";
+import { interpret } from "./interpret";
+import Output from "./Output";
 
 function App() {
-  const inputElement = useRef()
-  const [input, setInput] = useState('')
 
-  const clickHandler = (first) => { 
+  const inputElement = useRef()
+  const [notes, setNotes] = useState('')
+  const [interpretedNotes,setInterpretedNotes] = useState([{note:"",type:""}])
+
+  const clickHandler = () => { 
     inputElement.current.value = ''
-    alert("Click!");
+    setNotes('')
+    setInterpretedNotes( interpret(notes) )
     }
-    console.log(inputElement)
+
   return (
     <>
       <header>
@@ -17,14 +22,20 @@ function App() {
         <p>Please write your galactic notes into the box!</p>
       </header>
 
-      <textarea 
-        onChange={(e) => {setInput( e.target.value) }}
-        ref={inputElement} 
-        placeholder="type notes here..." 
-        cols="30" rows="10"
-      ></textarea>
-      <button onClick={clickHandler} disabled={!input}>translate</button>
-      <div data-testid='outputElement'></div>
+      <main>
+
+        <textarea 
+          onChange={(e) => {setNotes( e.target.value) }}
+          ref={inputElement} 
+          placeholder="type notes here..." 
+          cols="30" rows="10"
+        ></textarea>
+        
+        <button onClick={clickHandler} disabled={!notes}>translate</button>
+        
+        {interpretedNotes.map( (note,index) => <Output key={index} note = {note.note} type= {note.type}/> )}
+      
+      </main>
     </>
   );
 }

@@ -10,13 +10,11 @@ describe('html layout',() => {
     const instructionsElement = screen.getByText(/Instructions:/i);
     const input = screen.getByPlaceholderText(/type notes here.../i);
     const button = screen.getByText(/translate/i);
-    const output = screen.getByTestId(/outputElement/i);
-
+    
     expect(header).toBeInTheDocument();
     expect(instructionsElement).toBeInTheDocument();
     expect(input).toBeInTheDocument();
     expect(button).toBeInTheDocument();
-    expect(output).toBeInTheDocument();
   });
 
   it('click button cleans input field', () => { 
@@ -40,3 +38,30 @@ describe('html layout',() => {
   })
 
 });
+
+
+const mockOutput = jest.fn();
+jest.mock("./Output", () => (props) => {
+  mockOutput(props);
+  return <mock-Output/>;
+});
+
+it('Output component recibes correct props', () => { 
+  render(<App/>);
+  
+  const input = screen.getByPlaceholderText(/type notes here.../i);
+  const button = screen.getByText(/translate/i);
+
+  userEvent.type(input,'I just typed something...')
+  userEvent.click(button)
+  
+  expect(mockOutput).toHaveBeenCalledWith(
+    expect.objectContaining(
+      {note:'I just typed something...', 
+      type:"invalid"
+  }))
+ }
+)
+
+
+
