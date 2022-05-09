@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
-
-
+import {GALACTIC_TO_ARABIC_DICTIONARY} from './App'
+console.log(GALACTIC_TO_ARABIC_DICTIONARY)
 describe('html layout',() => { 
   it('renders header, input box, button, output', () => {
     render(<App />);
@@ -76,7 +76,7 @@ it('stores number equivalence with type: "number" note',() => {
   userEvent.type(input,'glob is I \n how much is glob ? ')
   userEvent.click(button)
 
-  expect(screen.getByText(/glob is I/i)).toBeInTheDocument();
+  expect(GALACTIC_TO_ARABIC_DICTIONARY).toEqual({glob: "I"})
 })
 
 it.skip('stores exchange rate with type: "exchange" note',() => { 
