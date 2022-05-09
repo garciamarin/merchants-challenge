@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 
+
 describe('html layout',() => { 
   it('renders header, input box, button, output', () => {
     render(<App />);
@@ -62,6 +63,46 @@ it('Output component recibes correct props', () => {
   }))
  }
 )
+
+describe('outputHandler function',() => { 
+  
+  it('stores number equivalence with type: "number" note',() => { 
+    
+  const input = screen.getByPlaceholderText(/type notes here.../i);
+  const button = screen.getByText(/translate/i);
+  const output = screen.getAllByTestId(/outputElement/i)
+
+  userEvent.type(input,'glob is I')
+  userEvent.click(button)
+  expect(outputElement).toHaveTextContent('number')
+
+})
+
+it('stores exchange rate with type: "exchange" note',() => { 
+    
+  const input = screen.getByPlaceholderText(/type notes here.../i);
+  const button = screen.getByText(/translate/i);
+  const output = screen.getAllByTestId(/outputElement/i)
+
+  userEvent.type(input,'glob is I')
+  userEvent.click(button)
+  expect(outputElement).toHaveTextContent('exchange')
+})
+
+
+  it('displays "querry" with type: "querry" note',() => { 
+    
+    const input = screen.getByPlaceholderText(/type notes here.../i);
+    const button = screen.getByText(/translate/i);
+    const output = screen.getAllByTestId(/outputElement/i)
+  
+    userEvent.type(input,'how much is pish tegj glob glob ? ')
+    userEvent.click(button)
+    expect(outputElement).toHaveTextContent('querry')
+  })
+})
+  
+    
 
 
 

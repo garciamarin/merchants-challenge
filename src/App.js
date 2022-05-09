@@ -2,6 +2,9 @@ import { useRef, useState } from "react";
 import { interpret } from "./interpret";
 import Output from "./Output";
 
+
+
+
 function App() {
 
   const inputElement = useRef()
@@ -13,7 +16,11 @@ function App() {
     setNotes('')
     setInterpretedNotes( interpret(notes) )
     }
-
+  
+  const outputHandler = { 
+    
+     }
+  
   return (
     <>
       <header>
@@ -33,7 +40,7 @@ function App() {
         
         <button onClick={clickHandler} disabled={!notes}>translate</button>
         
-        {interpretedNotes.map( (note,index) => <Output key={index} note = {note.note} type= {note.type}/> )}
+        {interpretedNotes.map((note, index) => <Output key={index} note = {note.note} type= {note.type}/>)}
       
       </main>
     </>
