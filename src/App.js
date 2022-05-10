@@ -43,7 +43,7 @@ function App() {
         
         {interpretedNotes.map((note, index) => {
           if(note.type === 'number'){return addToDictionary(note.note,index)}
-          else if(note.type === 'exchange'){return <div>exchange</div> }
+          else if(note.type === 'exchange'){return <div key={index}>exchange</div> }
           else{return  <Output key={index} note = {note.note} type= {note.type}/> }
         }
         )}
