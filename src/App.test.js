@@ -94,7 +94,7 @@ it.skip('stores exchange rate with type: "exchange" note',() => {
 })
 
 
-  it.skip('displays "querry" with type: "querry" note',() => { 
+  it.skip('displays "query" with type: "query" note',() => { 
     render(<App />);
  
     const input = screen.getByPlaceholderText(/type notes here.../i);
@@ -106,7 +106,7 @@ it.skip('stores exchange rate with type: "exchange" note',() => {
     expect(mockOutput).toHaveBeenCalledWith(
       expect.objectContaining(
         {note:'how much is pish tegj glob glob ?', 
-        type:"querry"
+        type:"query"
     }))
   })
 })

@@ -12,8 +12,8 @@ it('transforms multi-line input into array with objects {note:"line 1" , type:"t
         how many Credits is glob prok Silver ? \n
         bla bla bla `)).
         toEqual([
-          {'note': 'how much is pish tegj glob glob ?','type':'querry'},
-          {'note': 'how many Credits is glob prok Silver ?','type':'querry'},
+          {'note': 'how much is pish tegj glob glob ?','type':'query'},
+          {'note': 'how many Credits is glob prok Silver ?','type':'query'},
           {'note': 'bla bla bla','type':'invalid'}
         ])
     } )
