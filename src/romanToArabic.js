@@ -9,6 +9,8 @@ const isValidRoman = (romanNumber) => {
 
 const romanToArabic = (romanNumberCandidate) => { 
 
+    if(!isValidRoman(romanNumberCandidate)) return NaN
+
     const arrayOfArabicDigits = romanNumberCandidate
         .split('')
         .map( digit => ROMAN_ARABIC_DICTIONARY[digit] )

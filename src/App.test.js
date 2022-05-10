@@ -1,8 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+
 import App from './App';
 import {GALACTIC_TO_ARABIC_DICTIONARY} from './App'
-console.log(GALACTIC_TO_ARABIC_DICTIONARY)
+
+
 describe('html layout',() => { 
   it('renders header, input box, button, output', () => {
     render(<App />);

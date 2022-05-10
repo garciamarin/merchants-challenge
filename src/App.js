@@ -16,10 +16,9 @@ function App() {
     setInterpretedNotes( interpret(notes) )
     }
 
-  const digitToDictionary = (note,index) => { 
+  const addToDictionary = (note,index) => { 
     const splitedNote = note.split(' is ') 
     GALACTIC_TO_ARABIC_DICTIONARY[splitedNote[0]] = splitedNote[1];
-    return 
   }
 
   const logExchange = (first) => { return <div>hola</div> }
@@ -43,8 +42,8 @@ function App() {
         <button onClick={clickHandler} disabled={!notes}>translate</button>
         
         {interpretedNotes.map((note, index) => {
-          if(note.type === 'number'){return digitToDictionary(note.note,index)}
-          else if(note.type === 'exchange'){<div>exchange</div> }
+          if(note.type === 'number'){return addToDictionary(note.note,index)}
+          else if(note.type === 'exchange'){return <div>exchange</div> }
           else{return  <Output key={index} note = {note.note} type= {note.type}/> }
         }
         )}
