@@ -4,6 +4,10 @@ import userEvent from '@testing-library/user-event';
 import App from './App';
 import {GALACTIC_TO_ARABIC_DICTIONARY} from './App'
 
+const NUMBER_NOTE = "glob is I"
+const EXCHANGE_RATE_NOTE = "glob glob Silver is 34 Credits"
+const EXCHANGE_QUERY = "how many Credits is glob glob Silver ?"
+
 
 describe('html layout',() => { 
   it('renders header, input box, button, output', () => {
@@ -81,16 +85,22 @@ it('stores number equivalence with type: "number" note',() => {
   expect(GALACTIC_TO_ARABIC_DICTIONARY).toEqual({glob: "I"})
 })
 
-it.skip('stores exchange rate with type: "exchange" note',() => { 
+it('stores and displays correctly metal rate for exchange-rate type notes ',() => { 
   render(<App />);
   
   const input = screen.getByPlaceholderText(/type notes here.../i);
   const button = screen.getByText(/translate/i);
-  const output = screen.getByTestId(/outputElement/i)
 
-  userEvent.type(input,'glob is I')
+  userEvent.type(input,`
+    ${NUMBER_NOTE} \n 
+    ${EXCHANGE_RATE_NOTE} \n
+    ${EXCHANGE_QUERY}
+    `)
   userEvent.click(button)
-  expect(output).toHaveTextContent('exchange')
+
+  const output = screen.getByText(/glob prok Silver is 68 Credits/i)
+
+  expect(output).toBeInTheDocument()
 })
 
 
