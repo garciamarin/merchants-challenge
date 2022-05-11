@@ -1,9 +1,9 @@
 import { romanToArabic } from "./romanToArabic";
 
-const GALACTIC_TO_ROMAN_DICTIONARY = {pish : "X", tegj:"L", glob:"I",prok: "V"}
-const METAL_RATES = {Silver: 17 , Gold: '8000000'}
+//const GALACTIC_ROMAN_DICTIONARY = {pish : "X", tegj:"L", glob:"I",prok: "V"}
+// const RESOURCE_EXCHANGE_RATES = {Silver: 17 , Gold: '8000000'}
 
-export default function Output({note,type}) {
+export default function Output({ note , type , RESOURCE_EXCHANGE_RATES, GALACTIC_ROMAN_DICTIONARY}) {
 
     if(!type) return <div data-testid='translatedNote'></div>; 
     if(type !== 'query') return <div>I don't know what you are talking about</div>;
@@ -24,14 +24,14 @@ export default function Output({note,type}) {
         const galacticDigits = galacticNumber.split(' ')
 
         const romanDigits = galacticDigits.map((digit) =>  
-                GALACTIC_TO_ROMAN_DICTIONARY[digit] ? 
-                GALACTIC_TO_ROMAN_DICTIONARY[digit] : 
+                GALACTIC_ROMAN_DICTIONARY[digit] ? 
+                GALACTIC_ROMAN_DICTIONARY[digit] : 
                 `invalid`
             )
         const romanNumber = romanDigits.join('')
         
         const unknownGalacticDigits = galacticDigits
-            .filter((digit) => !GALACTIC_TO_ROMAN_DICTIONARY[digit])
+            .filter((digit) => !GALACTIC_ROMAN_DICTIONARY[digit])
             .map((unknownNumber) => `${unknownNumber} is not in dictionary. `)
 
         if(romanDigits.includes('invalid')) output = unknownGalacticDigits
@@ -53,22 +53,21 @@ const computeExchange = (note) => {
     const galacticDigits = resourceAmount_Array.slice( 0 , lengthArray - 1 )
 
     const romanDigits = galacticDigits.map((digit) =>  
-    GALACTIC_TO_ROMAN_DICTIONARY[digit] ? 
-    GALACTIC_TO_ROMAN_DICTIONARY[digit] : 
+    GALACTIC_ROMAN_DICTIONARY[digit] ? 
+    GALACTIC_ROMAN_DICTIONARY[digit] : 
     `invalid`
     )
     const romanNumber = romanDigits.join('')
 
     const unknownGalacticDigits = galacticDigits
-    .filter((digit) => !GALACTIC_TO_ROMAN_DICTIONARY[digit])
+    .filter((digit) => !GALACTIC_ROMAN_DICTIONARY[digit])
     .map((unknownNumber) => `${unknownNumber} is not in dictionary. `)
 
     if(romanDigits.includes('invalid')) output = unknownGalacticDigits
     else if(!romanToArabic(romanNumber)) output = `${galacticDigits} translates to ${romanNumber} which is not a valid Roman number`
     else {arabicNumber = romanToArabic(romanNumber)}
 
-    const metalRate = METAL_RATES[metal] 
-    
+    const metalRate = RESOURCE_EXCHANGE_RATES[metal] 
     if(metalRate && arabicNumber) { output = `${resourceAmount} is ${arabicNumber * metalRate} Credits`  }
     else if (!metalRate){output += `${metal} exchange rate is not known.`}
 

@@ -2,11 +2,13 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import App from './App';
-import {GALACTIC_TO_ARABIC_DICTIONARY} from './App'
+import { GALACTIC_ROMAN_DICTIONARY , RESOURCE_EXCHANGE_RATES } from './App'
 
 const NUMBER_NOTE = "glob is I"
 const EXCHANGE_RATE_NOTE = "glob glob Silver is 34 Credits"
 const EXCHANGE_QUERY = "how many Credits is glob glob Silver ?"
+
+const EXCHANGE_RATE_NOTE_INCORRECT_NUMBER = "xxxx glob Silver is 34 Credits"
 
 
 describe('html layout',() => { 
@@ -25,8 +27,8 @@ describe('html layout',() => {
   });
 
   it('click button cleans input field', () => { 
+  
     render(<App />);
-
     const inputElement = screen.getByPlaceholderText(/type notes here.../i);
     const button = screen.getByText(/translate/i);
 
@@ -43,9 +45,7 @@ describe('html layout',() => {
 
     expect(button).toBeDisabled();
   })
-
 });
-
 
 const mockOutput = jest.fn();
 jest.mock("./Output", () => (props) => {
@@ -67,49 +67,65 @@ it('Output component recibes correct props', () => {
       {note:'I just typed something...', 
       type:"invalid"
   }))
- }
-)
+})
 
 describe('outputHandler function',() => { 
   
-it('stores number equivalence with type: "number" note',() => { 
-  
-  render(<App />);
-
-  const button = screen.getByText(/translate/i);
-  const input = screen.getByPlaceholderText(/type notes here.../i);
-
-  userEvent.type(input,'glob is I \n how much is glob ? ')
-  userEvent.click(button)
-
-  expect(GALACTIC_TO_ARABIC_DICTIONARY).toEqual({glob: "I"})
-})
-
-it('stores and displays correctly metal rate for exchange-rate type notes ',() => { 
-  render(<App />);
-  
-  const input = screen.getByPlaceholderText(/type notes here.../i);
-  const button = screen.getByText(/translate/i);
-
-  userEvent.type(input,`
-    ${NUMBER_NOTE} \n 
-    ${EXCHANGE_RATE_NOTE} \n
-    ${EXCHANGE_QUERY}
-    `)
-  userEvent.click(button)
-
-  const output = screen.getByText(/glob prok Silver is 68 Credits/i)
-
-  expect(output).toBeInTheDocument()
-})
-
-
-  it.skip('displays "query" with type: "query" note',() => { 
+  it('stores number equivalence with type: "number" note',() => { 
+    
     render(<App />);
- 
+    const button = screen.getByText(/translate/i);
+    const input = screen.getByPlaceholderText(/type notes here.../i);
+
+    userEvent.type(input,'glob is I \n how much is glob ? ')
+    userEvent.click(button)
+
+    expect(GALACTIC_ROMAN_DICTIONARY).toEqual({glob: "I"})
+  })
+
+  it('stores metal rate for exchange-rate type notes ', () => { 
+    render(<App />);
+    
     const input = screen.getByPlaceholderText(/type notes here.../i);
     const button = screen.getByText(/translate/i);
-    //const output = screen.getAllByTestId(/outputElement/i)
+
+    userEvent.type(input, "glob is I \n glob glob Silver is 34 Credits")
+    userEvent.click(button)
+    expect(RESOURCE_EXCHANGE_RATES).toEqual({Silver: 17})  
+  })
+
+  it('passes prop of resource exchange rate', () => { 
+    render(<App />);
+    
+    const input = screen.getByPlaceholderText(/type notes here.../i);
+    const button = screen.getByText(/translate/i);
+
+    userEvent.type(input, "glob is I \n glob glob Silver is 34 Credits")
+    userEvent.click(button)
+      
+    expect(mockOutput).toHaveBeenCalledWith(
+      expect.objectContaining({RESOURCE_EXCHANGE_RATES : {Silver: 17}}
+    ))
+  })
+
+  it('alerts when number is not in dictionary for exchange-rate notes with that error', () => { 
+    render(<App />);
+    
+    const input = screen.getByPlaceholderText(/type notes here.../i);
+    const button = screen.getByText(/translate/i);
+
+    userEvent.type(input, EXCHANGE_RATE_NOTE_INCORRECT_NUMBER )
+    userEvent.click(button)
+
+    const errorHandling = screen.getByTestId(/error handling: exchange/)
+    expect(errorHandling).toBeInTheDocument();
+  })
+
+  it('displays "query" with type: "query" note',() => { 
+    
+    render(<App />);
+    const input = screen.getByPlaceholderText(/type notes here.../i);
+    const button = screen.getByText(/translate/i);
   
     userEvent.type(input,'how much is pish tegj glob glob ? ')
     userEvent.click(button)
