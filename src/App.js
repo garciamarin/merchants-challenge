@@ -1,12 +1,14 @@
 import { useRef, useState } from "react";
-import { interpret } from "./interpret";
-import Output from "./Output";
 
+import Output from "./Output";
+import Header from "./Header";
+import { interpret } from "./interpret";
 import { romanToArabic } from "./romanToArabic";
 
 const GALACTIC_ROMAN_DICTIONARY = {}
 //{glob : 'I', prok : 'V', pish : 'X', tegj : 'L'}
 const RESOURCE_EXCHANGE_RATES = {}
+
 function App() {
 
   const inputElement = useRef()
@@ -37,14 +39,19 @@ function App() {
     const galacticNumber = galacticDigits.join(' ')
     const unknownGalacticDigits = galacticDigits
             .filter((digit) => !GALACTIC_ROMAN_DICTIONARY[digit])
-            .map((unknownNumber) => `${unknownNumber} is not in dictionary. `)
+            .map((digit) => `${digit} is not in dictionary. `)
 
-    if(romanDigits.includes('invalid')) arabicNumber = unknownGalacticDigits
-    else if(!romanToArabic(romanNumber)) arabicNumber = `${galacticNumber} translates to ${romanNumber} which is not a valid Roman number`
-    else arabicNumber = romanToArabic(romanNumber)
+    // if(romanDigits.includes('invalid')) arabicNumber = unknownGalacticDigits
+    // else if(!romanToArabic(romanNumber)) arabicNumber = `${galacticNumber} translates to ${romanNumber} which is not a valid Roman number`
+    // else arabicNumber = romanToArabic(romanNumber)
+
+    arabicNumber = 
+      romanDigits.includes('invalid') ? unknownGalacticDigits :
+      romanToArabic(romanNumber) ? romanToArabic(romanNumber) :
+      `${galacticNumber} translates to ${romanNumber} which is not a valid Roman number` 
+        
     return arabicNumber
  }
-
 
 const addValueOfResource = (note,index) => { 
     
@@ -54,24 +61,17 @@ const resource = quantityAndResource.slice(-1).join()
 const galacticDigits = quantityAndResource.slice(0,-1)
 
 const  arabicNumber = galactcToArabic(galacticDigits) 
-const resorceExchangeRate = (typeof arabicNumber === 'number') ? 
-  credits / arabicNumber 
-  : galactcToArabic(galacticDigits) 
+const output = <div key={index} data-testid='error handling: exchange'>{arabicNumber}</div>
 
-if(typeof arabicNumber === 'number'){ 
-  RESOURCE_EXCHANGE_RATES[resource] = credits / arabicNumber
-}
-else return <div key={index} data-testid='error handling: exchange'>{arabicNumber}</div>
+if(typeof arabicNumber !== 'number') return output
+
+RESOURCE_EXCHANGE_RATES[resource] = credits / arabicNumber 
 }
 
   return (
     <>
-      <header>
-        <h1>Merchant's Intergalactic Translator</h1>
-        <h3>Instructions:</h3> 
-        <p>Please write your galactic notes into the box!</p>
-      </header>
-
+      <Header/>
+  
       <main>
 
         <textarea 
@@ -83,6 +83,10 @@ else return <div key={index} data-testid='error handling: exchange'>{arabicNumbe
         
         <button onClick={clickHandler} disabled={!notes}>translate</button>
         
+        {/* {digitNotes.map()}
+        {exchangeNotes.map()}
+        {queryNotes.map()} */}
+
         {interpretedNotes.map((note, index) => {
           if(note.type === 'number'){return addToDictionary(note.note,index)}
           else if(note.type === 'exchange'){return addValueOfResource(note.note,index) }

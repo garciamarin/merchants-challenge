@@ -3,7 +3,7 @@ const EXCHANGE_REGEX_CONDITION = / is \d+ credits$/i
 const QUERY_REGEX_CONDITION = /^(how many credits is)+( [a-zA-Z]*)*\s*\?$|^(how much is ).*\?$/i
 
 const determineTypeOfSentence = (sentence) => { 
-
+    
     if(NUMBER_EQUIVALENCE_REGEX_CONDITION.test(sentence)) return "number"
     else if(EXCHANGE_REGEX_CONDITION.test(sentence)) return "exchange"
     else if(QUERY_REGEX_CONDITION.test(sentence)) return "query"
