@@ -3,74 +3,59 @@ import { useRef, useState } from "react";
 import Output from "./Output";
 import Header from "./Header";
 import { interpret } from "./interpret";
-import { romanToArabic } from "./romanToArabic";
+import { galactcToArabic } from "./galactictoArabic";
 
 const GALACTIC_ROMAN_DICTIONARY = {}
-//{glob : 'I', prok : 'V', pish : 'X', tegj : 'L'}
 const RESOURCE_EXCHANGE_RATES = {}
 
-function App() {
+export default function App() {
 
   const inputElement = useRef()
   const [notes, setNotes] = useState('')
-  const [interpretedNotes,setInterpretedNotes] = useState([{note:"",type:""}])  
+  const [digitNotes, setDigitNotes] = useState([])
+  const [exchangeNotes, setExchangeNotes] = useState([])
+  const [queriesAndOthers, setQueriesAndOthers] = useState([])
+
+  const errorWarning = (error, note) => 
+          <div key={note} data-testid={`error handling: ${error.kind}`}>
+            {note}: {error.message}
+          </div>
 
   const clickHandler = () => { 
-    inputElement.current.value = ''
-    setNotes('')
-    setInterpretedNotes( interpret(notes) )
-    }
+    const interpretedNotes = interpret(notes)
+    const filterNotes = (type1, type2) => interpretedNotes
+            .filter( note => note.type === type1 || note.type === type2 ) 
 
-  const addToDictionary = (note,type,index) => { 
-    const splitedNote = note.split(' is ') 
-    const errorOutput = 
-      <div key={index} data-testid='error handling: not roman digit'>Wrong format in "{note}". 
-       Exclusively one roman digit should follow "is": I, V, X, L, C, D, M</div>
+    setDigitNotes ( filterNotes('number','invalid number') )
+    setExchangeNotes ( filterNotes('exchange'))
+    setQueriesAndOthers( filterNotes('query','invalid'))
     
-    if(type === 'invalid number') return errorOutput
-    GALACTIC_ROMAN_DICTIONARY[splitedNote[0]] = splitedNote[1];
+    inputElement.current.value = ''
   }
 
-  const galactcToArabic = (galacticDigits) => { 
-    let arabicNumber = NaN
+  const addToDictionary = (note,type) => { 
+    const error = { 
+                    kind : 'not roman digit',
+                    message: `Wrong format. Only and only one Roman digit: I, V, X, L, C, D, M`
+                  }
+    const galacticDigit = note.split(' is ')[0]
+    const romanDigit = note.split(' is ')[1]
 
-    const romanDigits = galacticDigits.map((digit) =>  
-      GALACTIC_ROMAN_DICTIONARY[digit] ? 
-      GALACTIC_ROMAN_DICTIONARY[digit] : 
-      `invalid`
-      )
-    const romanNumber = romanDigits.join('')
-    
-    const galacticNumber = galacticDigits.join(' ')
-    const unknownGalacticDigits = galacticDigits
-            .filter((digit) => !GALACTIC_ROMAN_DICTIONARY[digit])
-            .map((digit) => `${digit} is not in dictionary. `)
+    if(type === 'invalid number') return errorWarning( error, note )
+    GALACTIC_ROMAN_DICTIONARY[galacticDigit] = romanDigit;
+  }
 
-    // if(romanDigits.includes('invalid')) arabicNumber = unknownGalacticDigits
-    // else if(!romanToArabic(romanNumber)) arabicNumber = `${galacticNumber} translates to ${romanNumber} which is not a valid Roman number`
-    // else arabicNumber = romanToArabic(romanNumber)
+const addValueOfResource = (note) => { 
 
-    arabicNumber = 
-      romanDigits.includes('invalid') ? unknownGalacticDigits :
-      romanToArabic(romanNumber) ? romanToArabic(romanNumber) :
-      `${galacticNumber} translates to ${romanNumber} which is not a valid Roman number` 
-        
-    return arabicNumber
- }
-
-const addValueOfResource = (note,index) => { 
-    
-const credits = note.split(/ is /i)[1].split(' ')[0].trim()
-const quantityAndResource = note.split(/ is \d+ credits$/i)[0].split(' ')
-const resource = quantityAndResource.slice(-1).join()
-const galacticDigits = quantityAndResource.slice(0,-1)
-
-const  arabicNumber = galactcToArabic(galacticDigits) 
-const output = <div key={index} data-testid='error handling: exchange'>{arabicNumber}</div>
-
-if(typeof arabicNumber !== 'number') return output
-
-RESOURCE_EXCHANGE_RATES[resource] = credits / arabicNumber 
+  const credits = note.split(/ is /i)[1].split(' ')[0].trim()
+  const quantityAndResource = note.split(/ is \d+ credits$/i)[0].split(' ')
+  const resource = quantityAndResource.slice(-1).join()
+  const galacticDigits = quantityAndResource.slice(0,-1)
+  const arabicNumber = galactcToArabic(galacticDigits) 
+  const error = { kind : 'exchange',message: arabicNumber}
+  
+  if(typeof arabicNumber !== 'number') return errorWarning( error, note )
+  RESOURCE_EXCHANGE_RATES[resource] = credits / arabicNumber 
 }
 
   return (
@@ -79,35 +64,30 @@ RESOURCE_EXCHANGE_RATES[resource] = credits / arabicNumber
   
       <main>
 
-        <textarea 
-          onChange={(e) => {setNotes( e.target.value) }}
-          ref={inputElement} 
+        <textarea ref={inputElement} 
           placeholder="type notes here..." 
-          cols="30" rows="10"
-        ></textarea>
+          cols="30" 
+          rows="10" 
+          onChange={(e) => {setNotes( e.target.value) }} >
+        </textarea>
         
         <button onClick={clickHandler} disabled={!notes}>translate</button>
         
-        {/* {digitNotes.map()}
-        {exchangeNotes.map()}
-        {queryNotes.map()} */}
-
-        {interpretedNotes.map((note, index) => {
-          if(note.type === 'number' || note.type === 'invalid number'){return addToDictionary(note.note,note.type,index)}
-          else if(note.type === 'exchange'){return addValueOfResource(note.note,index) }
-          else{return  <Output key={index} 
-            note = {note.note} 
-            type= {note.type} 
-            RESOURCE_EXCHANGE_RATES={RESOURCE_EXCHANGE_RATES}
-            GALACTIC_ROMAN_DICTIONARY={GALACTIC_ROMAN_DICTIONARY}
-            /> 
-          }
-        }
-        )}
+        {digitNotes.map( (note) => addToDictionary(note.note,note.type) )}
         
+        {exchangeNotes.map( (note) => addValueOfResource(note.note) )}
+        
+        {queriesAndOthers.map( (note,index) =>  
+            <Output key={index} 
+              note = {note.note} 
+              type= {note.type} 
+              RESOURCE_EXCHANGE_RATES={RESOURCE_EXCHANGE_RATES}
+              GALACTIC_ROMAN_DICTIONARY={GALACTIC_ROMAN_DICTIONARY}
+            /> 
+        )}
+
       </main>
     </>
   );
 }
 export {GALACTIC_ROMAN_DICTIONARY, RESOURCE_EXCHANGE_RATES}
-export default App;

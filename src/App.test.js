@@ -90,7 +90,7 @@ describe('outputHandler function',() => {
     const input = screen.getByPlaceholderText(/type notes here.../i);
     const button = screen.getByText(/translate/i);
 
-    userEvent.type(input, `${NUMBER_NOTE} \n ${EXCHANGE_RATE_NOTE}`)
+    userEvent.type(input, `${NUMBER_NOTE} \n ${EXCHANGE_RATE_NOTE} \n ${EXCHANGE_QUERY}`)
     userEvent.click(button)
       
     expect(mockOutput).toHaveBeenCalledWith(
@@ -153,6 +153,21 @@ describe('input precise error handling',() => {
 
     expect(errorHandling).toBeInTheDocument();
   })
+
+  it('renders Output with complete props independently of order of typing notes',() => {     
+    render(<App />);
+    const button = screen.getByText(/translate/i);
+    const input = screen.getByPlaceholderText(/type notes here.../i);
+    const wrongOrderOfNotes = `${EXCHANGE_RATE_NOTE} \n ${EXCHANGE_QUERY} \n ${NUMBER_NOTE}`
+    
+    userEvent.type(input, wrongOrderOfNotes)
+    userEvent.click(button)
+
+    expect(mockOutput).toHaveBeenCalledWith(
+      expect.objectContaining({
+          GALACTIC_ROMAN_DICTIONARY:{glob : "I"},
+          RESOURCE_EXCHANGE_RATES:{Silver : 17}
+        }
+      ))
+  })
 })
-
-
