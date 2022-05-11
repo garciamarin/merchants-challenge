@@ -21,8 +21,13 @@ function App() {
     setInterpretedNotes( interpret(notes) )
     }
 
-  const addToDictionary = (note,index) => { 
+  const addToDictionary = (note,type,index) => { 
     const splitedNote = note.split(' is ') 
+    const errorOutput = 
+      <div key={index} data-testid='error handling: not roman digit'>Wrong format in "{note}". 
+       Exclusively one roman digit should follow "is": I, V, X, L, C, D, M</div>
+    
+    if(type === 'invalid number') return errorOutput
     GALACTIC_ROMAN_DICTIONARY[splitedNote[0]] = splitedNote[1];
   }
 
@@ -88,7 +93,7 @@ RESOURCE_EXCHANGE_RATES[resource] = credits / arabicNumber
         {queryNotes.map()} */}
 
         {interpretedNotes.map((note, index) => {
-          if(note.type === 'number'){return addToDictionary(note.note,index)}
+          if(note.type === 'number' || note.type === 'invalid number'){return addToDictionary(note.note,note.type,index)}
           else if(note.type === 'exchange'){return addValueOfResource(note.note,index) }
           else{return  <Output key={index} 
             note = {note.note} 

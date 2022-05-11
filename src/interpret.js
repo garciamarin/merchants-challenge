@@ -1,25 +1,27 @@
-const NUMBER_EQUIVALENCE_REGEX_CONDITION = /^[a-zA-Z]+( is )([iI]|[vV]|[xX]|[lL]|[cC]|[dD]|[mM])$/i
-const EXCHANGE_REGEX_CONDITION = / is \d+ credits$/i
-const QUERY_REGEX_CONDITION = /^(how many credits is)+( [a-zA-Z]*)*\s*\?$|^(how much is ).*\?$/i
+const NUMBER_EQUIVALENCE_REGEX = /^[a-zA-Z]+( is )([iI]|[vV]|[xX]|[lL]|[cC]|[dD]|[mM])$/i
+const EXCHANGE_REGEX = / is \d+ credits$/i
+const QUERY_REGEX = /^(how many credits is)+( [a-zA-Z]*)*\s*\?$|^(how much is ).*\?$/i
+const NUMBER_INCORRECT_REGEX = /^[a-zA-Z]+( is ).*/i
 
-const determineTypeOfSentence = (sentence) => { 
-    
-    if(NUMBER_EQUIVALENCE_REGEX_CONDITION.test(sentence)) return "number"
-    else if(EXCHANGE_REGEX_CONDITION.test(sentence)) return "exchange"
-    else if(QUERY_REGEX_CONDITION.test(sentence)) return "query"
+const determineTypeOfNote = (note) => { 
+    if(NUMBER_EQUIVALENCE_REGEX.test(note)) return "number"
+    if(NUMBER_INCORRECT_REGEX.test(note)) return "invalid number"
+    if(EXCHANGE_REGEX.test(note)) return "exchange"
+    if(QUERY_REGEX.test(note)) return "query"
     return "invalid"
-
  }
 
-const interpret = (input) => { 
-    const splitedInput = input.split(/\r?\n/)
-        .filter( line => line)
-        .map( line => line.trim() )
-    
-    const inputTypeArray = splitedInput.map( line => {
-      return {note: line, type: determineTypeOfSentence(line)}
+const interpret = (notes) => { 
+  const splitedNotes = notes.split(/\r?\n/)
+          .filter( note => note)
+          .map(note => note.replace(/ +/g, " ").trim())
+          // .map( note => note.trim() )
+  
+  const noteTypeArray = splitedNotes.map( note => {
+    return {note: note, type: determineTypeOfNote(note)}
     })
-    return inputTypeArray
+
+  return noteTypeArray
  }
 
  export {interpret}
