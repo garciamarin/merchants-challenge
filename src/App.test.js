@@ -165,7 +165,6 @@ describe('input precise error handling',() => {
 
     expect(mockOutput).toHaveBeenCalledWith(
       expect.objectContaining({
-          GALACTIC_ROMAN_DICTIONARY:{glob : "I"},
           RESOURCE_EXCHANGE_RATES:{Silver : 17}
         }
       ))

@@ -82,7 +82,6 @@ const addValueOfResource = (note) => {
               note = {note.note} 
               type= {note.type} 
               RESOURCE_EXCHANGE_RATES={RESOURCE_EXCHANGE_RATES}
-              GALACTIC_ROMAN_DICTIONARY={GALACTIC_ROMAN_DICTIONARY}
             /> 
         )}
 
