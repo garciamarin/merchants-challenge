@@ -8,4 +8,6 @@ it('translates galactic numbers into arabic numbers correctly',() => {
     expect(galactcToArabic(['glob'])).toEqual(1)
     expect(galactcToArabic(['glob', 'glob'])).toEqual(2)
     expect(galactcToArabic(['pish', 'tegj', 'glob'])).toEqual(41)
+    expect(galactcToArabic(['xxxx'])).toEqual(['xxxx is not in dictionary. '])
+    expect(galactcToArabic(['glob','tegj'])).toEqual(`glob tegj translates to IL which is not a valid Roman number` )
 })

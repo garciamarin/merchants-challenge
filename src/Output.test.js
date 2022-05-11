@@ -14,12 +14,10 @@ const EXCHANGE_QUERY_INVALID_METAL = "how many Credits is glob prok Mercury ?"
 const EXCHANGE_QUERY_INVALID_NUMBER = "how many Credits is xxxx prok Silver ?"
 const EXCHANGE_QUERY_INVALID_METAL_AND_NUMBER = "how many Credits is xxxx prok Mercury ?"
 
-const GALACTIC_DIGITS = ["pish", "tegj", "glob", "glob"]
-
 describe('html layout',() => { 
   
   it('renders output when prop is a "query" type note', () => {
-    render(<Output note={NUMBER_QUERY} type={'query'} GALACTIC_ROMAN_DICTIONARY = {{pish : "X", tegj:"L", glob:"I",prok: "V"}}/>);
+    render(<Output note={NUMBER_QUERY} type={'query'} />);
     const outputNote = screen.getByTestId(/translatedNote/i);
     expect(outputNote).toBeInTheDocument();
   });
@@ -44,7 +42,6 @@ describe('translates queries properly',() => {
     render(<Output 
               note={NUMBER_QUERY} 
               type={'query'} 
-              GALACTIC_ROMAN_DICTIONARY = {{pish : "X", tegj:"L", glob:"I",prok: "V"}}
             />)
 
     expect(galactcToArabic).
@@ -64,7 +61,7 @@ describe('translates queries properly',() => {
 
   it('handles number query errors correctly: unknown digit',() => { 
     jest.spyOn(importsGalactcToArabic, 'galactcToArabic').mockReturnValue( 'xxxx is not in dictionary');
-    render(<Output note={NUMBER_QUERY_INVALID_DIGIT} type={'query'} GALACTIC_ROMAN_DICTIONARY = {{pish : "X", tegj:"L", glob:"I",prok: "V"}} />);
+    render(<Output note={NUMBER_QUERY_INVALID_DIGIT} type={'query'}/>);
     const output = screen.getByText(/xxxx is not in dictionary/i)
     expect(output).toBeInTheDocument();
   })
@@ -72,7 +69,7 @@ describe('translates queries properly',() => {
 
   it('handles number query errors correctly: wrong roman number format',() => { 
     jest.spyOn(importsGalactcToArabic, 'galactcToArabic').mockReturnValue( `which is not a valid Roman number`);
-    render(<Output note={NUMBER_QUERY_INVALID_ROMAN_FORMAT} type={'query'} GALACTIC_ROMAN_DICTIONARY = {{pish : "X", tegj:"L", glob:"I",prok: "V"}}/>);
+    render(<Output note={NUMBER_QUERY_INVALID_ROMAN_FORMAT} type={'query'}/>);
     const output = screen.getByText(/which is not a valid Roman number/i)
     expect(output).toBeInTheDocument();
 
@@ -80,21 +77,21 @@ describe('translates queries properly',() => {
 
   it('handles exchange query errors correctly: unknown metal',() => { 
     jest.spyOn(importsGalactcToArabic, 'galactcToArabic').mockReturnValue( 'xxxx is not in dictionary. ');
-    render(<Output  note={EXCHANGE_QUERY_INVALID_METAL} type={'query'} RESOURCE_EXCHANGE_RATES={{Silver : 17}} GALACTIC_ROMAN_DICTIONARY = {{pish : "X", tegj:"L", glob:"I",prok: "V"}}/>);
+    render(<Output  note={EXCHANGE_QUERY_INVALID_METAL} type={'query'} RESOURCE_EXCHANGE_RATES={{Silver : 17}}/>);
     const output = screen.getByText(/mercury exchange rate is not known/i)
     expect(output).toBeInTheDocument();
   })
 
   it('handles exchange query errors correctly: unknown number',() => { 
     jest.spyOn(importsGalactcToArabic, 'galactcToArabic').mockReturnValue( 'xxxx is not in dictionary' );
-    render(<Output  note={EXCHANGE_QUERY_INVALID_NUMBER} type={'query'} RESOURCE_EXCHANGE_RATES={{Silver : 17}} GALACTIC_ROMAN_DICTIONARY = {{pish : "X", tegj:"L", glob:"I",prok: "V"}} />);
+    render(<Output  note={EXCHANGE_QUERY_INVALID_NUMBER} type={'query'} RESOURCE_EXCHANGE_RATES={{Silver : 17}} />);
     const output = screen.getByText(/xxxx is not in dictionary/i)
     expect(output).toBeInTheDocument();
   })
 
   it('handles exchange query errors correctly: unknown metal & number',() => { 
     jest.spyOn(importsGalactcToArabic, 'galactcToArabic').mockReturnValue( 'xxxx is not in dictionary. ');
-    render(<Output  note={EXCHANGE_QUERY_INVALID_METAL_AND_NUMBER} type={'query'} RESOURCE_EXCHANGE_RATES={{Silver : 17}} GALACTIC_ROMAN_DICTIONARY = {{pish : "X", tegj:"L", glob:"I",prok: "V"}} />);
+    render(<Output  note={EXCHANGE_QUERY_INVALID_METAL_AND_NUMBER} type={'query'} RESOURCE_EXCHANGE_RATES={{Silver : 17}}/>);
     const output = screen.getByText(/xxxx is not in dictionary. mercury exchange rate is not known/i)
     expect(output).toBeInTheDocument();
   })

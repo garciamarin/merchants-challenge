@@ -15,9 +15,6 @@ const galactcToArabic = (galacticDigits) => {
             .filter((digit) => !GALACTIC_ROMAN_DICTIONARY[digit])
             .map((digit) => `${digit} is not in dictionary. `)
 
-    // if(romanDigits.includes('invalid')) arabicNumber = unknownGalacticDigits
-    // else if(!romanToArabic(romanNumber)) arabicNumber = `${galacticNumber} translates to ${romanNumber} which is not a valid Roman number`
-    // else arabicNumber = romanToArabic(romanNumber)
 
     const arabicNumber = 
       romanDigits.includes('invalid') ? unknownGalacticDigits :

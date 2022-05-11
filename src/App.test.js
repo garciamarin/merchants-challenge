@@ -9,10 +9,12 @@ const EXCHANGE_RATE_NOTE = "glob glob Silver is 34 Credits"
 const EXCHANGE_QUERY = "how many Credits is glob glob Silver ?"
 const EXCHANGE_RATE_NOTE_INCORRECT_NUMBER = "xxxx glob Silver is 34 Credits"
 
+beforeEach(() => {
+  render(<App />);
+});
+
 describe('html layout',() => { 
   it('renders header, input box, button, output', () => {
-    render(<App />);
-
     const input = screen.getByPlaceholderText(/type notes here.../i);
     const button = screen.getByText(/translate/i);
     
@@ -21,8 +23,6 @@ describe('html layout',() => {
   });
 
   it('click button cleans input field', () => { 
-  
-    render(<App />);
     const inputElement = screen.getByPlaceholderText(/type notes here.../i);
     const button = screen.getByText(/translate/i);
 
@@ -33,8 +33,6 @@ describe('html layout',() => {
    })
 
   it('button is disabled if input Element is empty', () => { 
-    render(<App />);
-
     const button = screen.getByText(/translate/i);
 
     expect(button).toBeDisabled();
@@ -48,7 +46,6 @@ jest.mock("./Output", () => (props) => {
 });
 
 it('Output component recibes correct props', () => { 
-  render(<App/>); 
   const input = screen.getByPlaceholderText(/type notes here.../i);
   const button = screen.getByText(/translate/i);
 
@@ -65,7 +62,6 @@ it('Output component recibes correct props', () => {
 describe('outputHandler function',() => { 
   
   it('stores number equivalence with type: "number" note',() => {   
-    render(<App />);
     const button = screen.getByText(/translate/i);
     const input = screen.getByPlaceholderText(/type notes here.../i);
 
@@ -76,7 +72,6 @@ describe('outputHandler function',() => {
   })
 
   it('stores metal rate for exchange-rate type notes ', () => {     
-    render(<App />);
     const input = screen.getByPlaceholderText(/type notes here.../i);
     const button = screen.getByText(/translate/i);
 
@@ -85,8 +80,7 @@ describe('outputHandler function',() => {
     expect(RESOURCE_EXCHANGE_RATES).toEqual({Silver: 17})  
   })
 
-  it('passes prop of resource exchange rate', () => {    
-    render(<App />);
+  it('passes prop of resource exchange rate', () => {     
     const input = screen.getByPlaceholderText(/type notes here.../i);
     const button = screen.getByText(/translate/i);
 
@@ -99,8 +93,6 @@ describe('outputHandler function',() => {
   })
 
   it('alerts when number is not in dictionary for exchange-rate notes with that error', () => { 
-    
-    render(<App />);
     const input = screen.getByPlaceholderText(/type notes here.../i);
     const button = screen.getByText(/translate/i);
 
@@ -111,8 +103,7 @@ describe('outputHandler function',() => {
     expect(errorHandling).toBeInTheDocument();
   })
 
-  it('displays "query" with type: "query" note',() => { 
-    render(<App />);
+  it('displays "query" with type: "query" note',() => {  
     const input = screen.getByPlaceholderText(/type notes here.../i);
     const button = screen.getByText(/translate/i);
   
@@ -129,8 +120,7 @@ describe('outputHandler function',() => {
   
 describe('input precise error handling',() => { 
 
-  it('determines note type if there is repeated spaces between words',() => {     
-    render(<App />);
+  it('determines note type if there is repeated spaces between words',() => {       
     const button = screen.getByText(/translate/i);
     const input = screen.getByPlaceholderText(/type notes here.../i);
     const repetedSpacingInput = `glob   is   V \n how much is glob ?`
@@ -142,7 +132,6 @@ describe('input precise error handling',() => {
   })
 
   it('alerts if right hand side of number equivalence note is not a roman Digit ',() => {     
-    render(<App />);
     const button = screen.getByText(/translate/i);
     const input = screen.getByPlaceholderText(/type notes here.../i);
     const wrongInput = `glob is xxx`
@@ -155,7 +144,6 @@ describe('input precise error handling',() => {
   })
 
   it('renders Output with complete props independently of order of typing notes',() => {     
-    render(<App />);
     const button = screen.getByText(/translate/i);
     const input = screen.getByPlaceholderText(/type notes here.../i);
     const wrongOrderOfNotes = `${EXCHANGE_RATE_NOTE} \n ${EXCHANGE_QUERY} \n ${NUMBER_NOTE}`
