@@ -5,7 +5,7 @@ Have fun in your intergalactic quests, fellow cosmonaut!
 
 ## How to start
 
-You can visit _____ to immediately begging translating your notes.
+You can visit https://garciamarin.github.io/merchants-challenge/ to immediately begging translating your notes.
 Alternative, you can choose to clone the repository to your local computer and then do the usual: In a terminal, navigate inside the project's containing folder and run:   
 
 
