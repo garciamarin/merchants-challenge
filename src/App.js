@@ -6,6 +6,7 @@ import Output from "./Output";
 import Header from "./Header";
 import { interpret } from "./interpret";
 import { galactcToArabic } from "./galactictoArabic";
+import Dictionary from "./Dictionary";
 
 const GALACTIC_ROMAN_DICTIONARY = {}
 const RESOURCE_EXCHANGE_RATES = {}
@@ -93,6 +94,13 @@ const addValueOfResource = (note) => {
 
         </div>
       <button className = 'flex-column' onClick={clickHandler} disabled={!notes}>Translate</button>
+      
+      { 
+        Object?.keys(GALACTIC_ROMAN_DICTIONARY).length !== 0 && <Dictionary 
+          GALACTIC_ROMAN_DICTIONARY={GALACTIC_ROMAN_DICTIONARY} 
+          RESOURCE_EXCHANGE_RATES = {RESOURCE_EXCHANGE_RATES}
+          />
+      }
 
       </main>
     </div>

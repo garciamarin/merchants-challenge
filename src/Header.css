@@ -49,3 +49,16 @@ header{
 ul li {
     padding: .3rem;
 }
+.dictionary{
+    border: solid #218c8d 1px;
+    border-radius: 1rem;
+    max-width: 20rem;
+    min-height: 5rem;
+    margin: 2rem auto;
+    padding: 1rem;
+    font-size: 17px;
+    background-color: #27474e21;
+}
+.dictionary-header{ 
+    margin-top: -.5em;
+}
