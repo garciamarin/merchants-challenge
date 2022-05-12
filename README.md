@@ -6,10 +6,13 @@ Have fun in your intergalactic quests, fellow cosmonaut!
 ## How to start
 
 You can visit _____ to immediately begging translating your notes.
-Alternative, you can choose to clone the repository to your local computer and then do the usual: In a terminal, navigate inside the project's containing folder and run:  \
+Alternative, you can choose to clone the repository to your local computer and then do the usual: In a terminal, navigate inside the project's containing folder and run:   
 
-    > npm install  \
-    > npm start  \
+
+    > npm install   
+    
+    > npm start   
+    
 
 The first command installs dependencies and the second runs the project using a node server. Which reminds me: You need node.js (https://nodejs.org/en/download/) to launch successfully! 
 
@@ -31,23 +34,35 @@ Above, galactic_digit is a word, roman digit is one and only one of the followin
 
 - If you type several overlaping digit-equivalences or resource's values for the same digit or resource, it will be assumed you want to update this quantity, so the last typed value will be stored. For example:   
 
-    glob is I  \
-    glob is V  \
+    glob is I   
+    
+    glob is V   
+    
 
 Will log the value of V for glob in the dictionary. 
 
 These are some examples of valid input formats:
 
-    > glob is I \
-    > glob    is  i \
-    > glob is I \
-      pish is X \
-      how much is pish glob glob? \
-    > How much is pish glob glob? \
-      glob is I \
-      pish is X \
-    > glob glob Silver is 34 Credits \
-      How many credits is glob prok Silver    ? \
+    > glob is I  
+    
+    > glob    is  i  
+    
+    > glob is I  
+    
+      pish is X  
+      
+      how much is pish glob glob?  
+      
+    > How much is pish glob glob?  
+    
+      glob is I  
+      
+      pish is X  
+      
+    > glob glob Silver is 34 Credits  
+    
+      How many credits is glob prok Silver    ?  
+      
 
 ## What it does
 
