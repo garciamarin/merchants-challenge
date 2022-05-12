@@ -1,5 +1,7 @@
 import { useRef, useState } from "react";
 
+import "./App.css";
+
 import Output from "./Output";
 import Header from "./Header";
 import { interpret } from "./interpret";
@@ -29,7 +31,8 @@ export default function App() {
     setDigitNotes ( filterNotes('number','invalid number') )
     setExchangeNotes ( filterNotes('exchange'))
     setQueriesAndOthers( filterNotes('query','invalid'))
-    
+
+    setNotes('')
     inputElement.current.value = ''
   }
 
@@ -59,34 +62,40 @@ const addValueOfResource = (note) => {
 }
 
   return (
-    <>
+    <div className="body">
       <Header/>
   
-      <main>
+      <main>  
 
-        <textarea ref={inputElement} 
-          placeholder="type notes here..." 
-          cols="30" 
-          rows="10" 
-          onChange={(e) => {setNotes( e.target.value) }} >
-        </textarea>
+        <div className="input">
+          <textarea ref={inputElement} 
+            placeholder="type notes here..." 
+            cols="50" 
+            rows="10" 
+            onChange={(e) => {setNotes( e.target.value) }} 
+            className = 'flex-column'
+            >
+          </textarea>
         
-        <button onClick={clickHandler} disabled={!notes}>translate</button>
-        
-        {digitNotes.map( (note) => addToDictionary(note.note,note.type) )}
-        
-        {exchangeNotes.map( (note) => addValueOfResource(note.note) )}
-        
-        {queriesAndOthers.map( (note,index) =>  
-            <Output key={index} 
-              note = {note.note} 
-              type= {note.type} 
-              RESOURCE_EXCHANGE_RATES={RESOURCE_EXCHANGE_RATES}
-            /> 
-        )}
+          <div className="flex-column output">
+            {digitNotes.map( (note) => addToDictionary(note.note,note.type) )}
+            
+            {exchangeNotes.map( (note) => addValueOfResource(note.note) )}
+            
+            {queriesAndOthers.map( (note,index) =>  
+                <Output key={index} 
+                  note = {note.note} 
+                  type= {note.type} 
+                  RESOURCE_EXCHANGE_RATES={RESOURCE_EXCHANGE_RATES}
+                /> 
+            )}
+          </div>
+
+        </div>
+      <button className = 'flex-column' onClick={clickHandler} disabled={!notes}>Translate</button>
 
       </main>
-    </>
+    </div>
   );
 }
 export {GALACTIC_ROMAN_DICTIONARY, RESOURCE_EXCHANGE_RATES}

@@ -1,0 +1,51 @@
+.instructions{
+    text-align: left;
+    padding: 1rem;
+
+}
+header{
+    max-width: 50rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+.visible{
+    display: block;
+}
+.hidden{
+    display: none;
+}
+.center{
+    margin-left: auto;
+    margin-right: auto;
+}
+.display-inline{
+    display: inline;
+}
+.right{
+    margin-left: auto;
+    margin-right: 0;
+}
+.instructions-header{
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem;
+
+}
+.instructions-container{
+    background-image: url('./img/paper.jpeg');
+    padding: 2rem;
+    border-radius: 1rem;
+    color:#27474ef9 ;
+}
+.btn-instructions{
+    padding: .5rem;
+    background: #27474e00;
+    border: none;
+    font-size: 15px;
+    font-style:normal;
+    font-weight: 400;
+    color: #218c8d;
+}
+ul li {
+    padding: .3rem;
+}

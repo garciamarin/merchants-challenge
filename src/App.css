@@ -1,0 +1,81 @@
+.body{
+    box-sizing: border-box;
+    font-family: "Nova Mono","Space Mono",Monaco,Menlo,Consolas,monospace;
+    font-size: 15px;
+    font-style:normal;
+    font-weight: 400;
+    min-height: 100vh;
+    color: #218c8d;
+    /* color: #473E3F; */
+    text-align: center;
+    background-image:url('./img/astro.jpeg');
+    background-size: cover;
+    background-position: center; 
+    background-repeat: repeat-y;
+    padding: 2rem;
+}
+h1{ 
+    font-family: "Nova Mono",Monaco,Menlo,Consolas,monospace;
+
+}
+.center{
+        margin-left: auto;
+        margin-right: auto;
+}
+.input{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.flex-column{ 
+    margin: .5rem 
+}
+button {
+    background:#27474eec;
+    color:#3fc6fc7e;
+    border-radius: .5rem;
+    font-size: 15px;
+    padding: 1rem;
+    cursor:pointer;
+    font-family: "Nova Mono","Space Mono",Monaco,Menlo,Consolas,monospace;
+
+}
+button:disabled,
+button[disabled]{
+  display: none;
+    border: none;
+  background:#27474e0f;
+  color:#ffffff22;
+  cursor: not-allowed;
+
+}
+textarea {
+
+    background-color : #d1d1d1f6; 
+    color:#0b1e22e3;    
+    font-family: "Mono Space";
+    font-size: 15px;
+    border-radius: .5rem;
+    width: 30rem;
+    height: 10rem;
+    padding: 1rem;
+}
+
+.output{
+    background-color : #d1d1d1f6; 
+    color:#0b1e22e3;    
+    font-family: "Mono Space";
+    font-size: 15px;
+    border-radius: .5rem;
+    width: 30rem;
+    height: 10rem;
+    padding: 1rem;    
+}
+.grid-row{display:flex;flex:0 1 auto;flex-direction:row;flex-wrap:wrap;}
+@media screen and (max-width:40em){.grid-row{margin:0 auto}}
+.grid-column{flex:1 0 0%;padding:0 1.2rem}
+@media screen and (max-width:40em){.grid-column{flex-grow : 1;flex-basis:100%;max-width:100%;padding:0;margin-left:0}}
+
+a{
+    display: inline;
+}
