@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/merchants-challenge/static/css/main.a659bb4d.css",
-    "main.js": "/merchants-challenge/static/js/main.a2c60a89.js",
+    "main.js": "/merchants-challenge/static/js/main.6e7c3076.js",
     "static/media/astro.jpeg": "/merchants-challenge/static/media/astro.2b243fc2d36188682ec8.jpeg",
     "index.html": "/merchants-challenge/index.html",
     "main.a659bb4d.css.map": "/merchants-challenge/static/css/main.a659bb4d.css.map",
-    "main.a2c60a89.js.map": "/merchants-challenge/static/js/main.a2c60a89.js.map"
+    "main.6e7c3076.js.map": "/merchants-challenge/static/js/main.6e7c3076.js.map"
   },
   "entrypoints": [
     "static/css/main.a659bb4d.css",
-    "static/js/main.a2c60a89.js"
+    "static/js/main.6e7c3076.js"
   ]
 }
