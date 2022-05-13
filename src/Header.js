@@ -51,8 +51,8 @@ const [visible, setVisible] = useState(false)
                         dictionaries for future reference.                         
                     </li>
                     <li>
-                    The interpretation of notes with multiple lines is
-                    independet of the order in which you type the lines.
+                        The interpretation of notes with multiple lines is
+                        independet of the order in which you type the lines.
                     </li>
                 </ul>
                 <ul>
