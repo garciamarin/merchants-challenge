@@ -4,7 +4,6 @@ import * as importsGalactcToArabic from './galactictoArabic';
 
 import Output from './Output';
 
-
 const NUMBER_QUERY = "how much is pish tegj glob glob ?"
 const NUMBER_QUERY_INVALID_DIGIT = "how much is pish xxxx glob glob ?"
 const NUMBER_QUERY_INVALID_ROMAN_FORMAT = "how much is pish glob tegj glob ?"

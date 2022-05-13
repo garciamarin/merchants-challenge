@@ -52,7 +52,7 @@ export default function App() {
 const addValueOfResource = (note) => { 
 
   const credits = note.split(/ is /i)[1].split(' ')[0].trim()
-  const quantityAndResource = note.split(/ is \d+ credits$/i)[0].split(' ')
+  const quantityAndResource = note.split(/ is \d+ credits*$/i)[0].split(' ')
   const resource = quantityAndResource.slice(-1).join()
   const galacticDigits = quantityAndResource.slice(0,-1)
   const arabicNumber = galactcToArabic(galacticDigits) 

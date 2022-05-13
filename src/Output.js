@@ -1,6 +1,6 @@
 import { galactcToArabic } from "./galactictoArabic";
 
-export default function Output({ note , type , RESOURCE_EXCHANGE_RATES}) {
+export default function Output({ note , type , RESOURCE_EXCHANGE_RATES }) {
 
     const render = (output) => <div data-testid='translatedNote'> {output} </div> 
 
@@ -20,7 +20,7 @@ export default function Output({ note , type , RESOURCE_EXCHANGE_RATES}) {
         const arabicNumber = galactcToArabic(galacticDigits)
         const isNumber = typeof arabicNumber === 'number'
         const output =  isNumber ? `${galacticNumber} is ${arabicNumber}` : arabicNumber
-       
+
         return render(output)
     }
 
